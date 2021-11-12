@@ -1,0 +1,26 @@
+version: "3.9"
+
+x-node: &node
+  image: node:14.18.1-slim
+  working_dir: /app
+  volumes:
+    - ./:/app
+
+services:
+  npm:
+    <<: *node
+    command: ["npm", "install"]
+    environment:
+      - RUN_CONTEXT=
+
+  server:
+    <<: *node
+    depends_on:
+      npm:
+        # run server after npm install
+        condition: service_completed_successfully
+    command: ["npm", "run", "dev"]
+    ports:
+      - 3000:3000
+    environment:
+      - RUN_CONTEXT=
