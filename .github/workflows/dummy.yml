@@ -1,0 +1,11 @@
+name: Dummy
+
+on: push
+
+jobs:
+  package-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Which yq
+        run: which yq
